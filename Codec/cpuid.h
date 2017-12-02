@@ -34,7 +34,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 int GetProcessorCount();
 
 #ifdef __cplusplus

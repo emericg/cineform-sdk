@@ -80,41 +80,16 @@
 
 #endif
 
-
-#ifdef _WINDOWS
-
 #include "cpuid.h"
 
-static int GetProcessorCount()
-{
-	SYSTEM_INFO cSystem_info;
-	GetSystemInfo(&cSystem_info);
-	return cSystem_info.dwNumberOfProcessors;
-}
-
-#elif __APPLE__
+#if __APPLE__
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-static int GetProcessorCount()
-{
-	int maxProcs = 0;
-	size_t length = sizeof(maxProcs);
-	sysctlbyname("hw.physicalcpu",&maxProcs, &length, NULL, 0);
-	
-	return maxProcs;
-}
+#elif __linux__
 
-#else
-
-#include <stdint.h>
 #include <unistd.h>
-
-int GetProcessorCount()
-{
-	return sysconf(_SC_NPROCESSORS_ONLN);
-}
 
 #endif
 

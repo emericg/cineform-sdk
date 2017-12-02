@@ -25,7 +25,7 @@
 
 #pragma once
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
 // Windows header files (required for registry access)
 #include <windows.h>

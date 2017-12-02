@@ -43,9 +43,7 @@
 #include <stdint.h>
 #endif
 
-#if __APPLE_CC__
-//#include <QuickTime/QuickTime.h>
-#elif __GNUC__
+#if __linux__
 // Use byte swapping functions on Linux
 #include <byteswap.h>
 #else
