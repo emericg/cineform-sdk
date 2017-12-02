@@ -131,7 +131,8 @@ void ExportPPM(char *filename, char *metadata, void *frameBuffer, int frameWidth
 	inverted = InvertedPixelFormat(pixelFormat);
 
 	remove(filename);
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	FILE *fp = NULL;
 	fopen_s(&fp, filename, "wb");
 #else

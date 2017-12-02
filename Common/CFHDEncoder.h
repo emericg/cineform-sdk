@@ -27,7 +27,8 @@
 #include "CFHDError.h"
 #include "CFHDTypes.h"
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	#ifndef DYNAMICLIB
 		#define CFHDENCODER_API
 	#else

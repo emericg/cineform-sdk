@@ -26,7 +26,8 @@
 
 #include "StdAfx.h"
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #else
 #define MAX_PATH	260
 #if __APPLE__
@@ -55,7 +56,8 @@ void InitGetLUTPaths(char *pPathStr, size_t pathSize, char *pDBStr, size_t DBSiz
 {
 	if (pPathStr && pDBStr)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		DWORD dwType = REG_SZ, length = 260;
 		HKEY hKey = 0;
 		const char* CPsubkey = "SOFTWARE\\CineForm\\ColorProcessing";

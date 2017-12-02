@@ -21,6 +21,11 @@
 
 #pragma once
 
+#ifndef _MSVC_VER
+#include "pthread.h"
+#endif
+#include "Lock.h"
+
 // Control use of the new Windows condition variable primitives
 //#define _CONDITION_VARIABLE
 
@@ -37,7 +42,7 @@ public:
 	{
 		InitializeConditionVariable(&condition);
 	}
-#elif _WINDOWS
+#elif defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 	ConditionVariable() :
 		handle(NULL)
 	{
@@ -62,7 +67,7 @@ public:
 	{
 #ifdef _CONDITION_VARIABLE
 		return SleepConditionVariableCS(&condition, &mutex.lock, timeout);
-#elif _WINDOWS
+#elif defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		mutex.Unlock();
 		DWORD result = WaitForSingleObject(handle, timeout);
 		mutex.Lock();
@@ -76,7 +81,7 @@ public:
 	{
 #ifdef _CONDITION_VARIABLE
 		WakeConditionVariable(&condition);
-#elif _WINDOWS
+#elif defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		SetEvent(handle);
 #else
 		pthread_cond_signal(&cond);
@@ -87,7 +92,7 @@ private:
 
 #ifdef _CONDITION_VARIABLE
 	CONDITION_VARIABLE condition;
-#elif _WINDOWS
+#elif defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 	HANDLE handle;
 #else
 	pthread_cond_t cond;

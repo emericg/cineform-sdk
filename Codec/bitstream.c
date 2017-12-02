@@ -215,7 +215,8 @@ uint8_t  *GetBitstreamPosition(BITSTREAM *stream)
 // Set the current position of the pointer into the block
 void SetBitstreamPosition(BITSTREAM *stream, uint8_t  *position)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	LONGLONG skip = ((LONGLONG)position) - ((LONGLONG)stream->lpCurrentWord);
 #else
 	int64_t skip = ((int64_t)position) - ((int64_t)stream->lpCurrentWord);
@@ -240,7 +241,8 @@ uint8_t  GetWord(BITSTREAM *stream)
 		if (stream->file != BITSTREAM_FILE_INVALID &&
 			stream->access == BITSTREAM_ACCESS_READ)
 		{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			// Read a block from the file
 			BOOL bReadOkay = ReadFile(stream->file, stream->block, stream->dwBlockLength, &stream->nWordsUsed, NULL);
 
@@ -772,7 +774,8 @@ void PutWord(BITSTREAM *stream, uint8_t  word)
 		{
 			DWORD dwByteCount = stream->nWordsUsed * sizeof(uint8_t );
 			DWORD dwBytesWritten;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			// Write the block to the output file
 			bool bWriteOkay = WriteFile(stream->file, stream->block, dwByteCount, &dwBytesWritten, NULL);
 
@@ -1861,7 +1864,8 @@ void CloseBitstream(BITSTREAM *stream)
 		{
 			DWORD nBytesToWrite = stream->nWordsUsed * sizeof(uint8_t );
 			DWORD nBytesWritten;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			// Write the block to the output file
 			WriteFile(stream->file, stream->block, nBytesToWrite, &nBytesWritten, NULL);
 			assert(nBytesToWrite == nBytesWritten);
@@ -1921,7 +1925,8 @@ void DetachBitstreamFile(BITSTREAM *stream)
 		{
 			DWORD nBytesToWrite = stream->nWordsUsed * sizeof(uint8_t );
 			DWORD nBytesWritten;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			// Write the block to the output file
 			WriteFile(stream->file, stream->block, nBytesToWrite, &nBytesWritten, NULL);
 			assert(nBytesToWrite == nBytesWritten);

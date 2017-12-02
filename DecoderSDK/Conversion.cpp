@@ -68,7 +68,7 @@
 
 #include "decoder.h"				// Decoder data structure and entry points
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
 #include <stdlib.h>
 
@@ -85,7 +85,7 @@ unsigned short _byteswap_ushort(unsigned short x)
 
 	return ((x2 << 8) | x1);
 }
-#endif
+#endif // _DEBUG && 0
 
 #elif __APPLE__
 

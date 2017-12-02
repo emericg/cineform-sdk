@@ -35,7 +35,7 @@
 
 #endif
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 #include "ConvertYUV8.h"
 #endif
 

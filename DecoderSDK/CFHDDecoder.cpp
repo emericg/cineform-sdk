@@ -31,7 +31,7 @@ extern "C" {
 #endif
 
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
 // Export the interface to the decoder
 #define DECODERDLL_EXPORTS	1
@@ -73,7 +73,8 @@ extern "C" {
 #include "SampleMetadata.h"
 
 	
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	#ifdef DYNAMICLIB
 	BOOL APIENTRY DllMain(HANDLE hModule,
 						  DWORD ulReasonForCall,
@@ -89,7 +90,8 @@ extern "C" {
 		}
 		return TRUE;
 	}
-    #endif
+	#endif // DYNAMICLIB
+
 #else
 
 void _splitpath( const char * fullPath, char * drive, char * dir, char * fname, char * ext)
@@ -494,7 +496,7 @@ CFHD_ParseSampleHeader(void *samplePtr,
 	}
 	catch (...)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		char message[256];
 		sprintf_s(message, sizeof(message), "CSampleDecoder::PrepareDecoder caught internal codec error\n");
 		OutputDebugString(message);
@@ -748,7 +750,8 @@ CFHD_DecodeSample(CFHD_DecoderRef decoderRef,
 	}
 	catch (...)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		OutputDebugString("Target memory buffer is an invalid size");
 #endif
 		return CFHD_ERROR_DECODE_BUFFER_SIZE;
@@ -827,7 +830,8 @@ CFHD_CloseDecoder(CFHD_DecoderRef decoderRef)
 }
 
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include "CFHDMetadata.h"
 #else
 #include "CFHDMetadata.h"
@@ -1378,7 +1382,8 @@ CFHD_SetActiveMetadata(	CFHD_DecoderRef decoderRef,
 			
 //DANREMOVE			crc = ValidateLookGenCRC((char *)data);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			strcpy_s(lastpath, sizeof(lastpath), (char *)data);
 			_splitpath_s((char *)data, drive, sizeof(drive), dir, sizeof(dir), fname, sizeof(fname), ext, sizeof(ext));
 			_makepath_s(filename, sizeof(filename), NULL, NULL, fname, ext);
@@ -1394,7 +1399,8 @@ CFHD_SetActiveMetadata(	CFHD_DecoderRef decoderRef,
 				typesizebytes = ('c'<<24)|39;
 				metadata->AddMetaData(TAG_LOOK_FILE, typesizebytes, (void *)&filename[0]);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				strcpy_s(lastLUTfilename, sizeof(lastLUTfilename), filename); 
 #else
 				strcpy(lastLUTfilename, filename);

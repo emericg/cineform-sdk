@@ -25,7 +25,8 @@
 #include "config.h"		// Read program configuration parameters
 #include <limits.h>		// Range of integer data types
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #elif __APPLE__
 #include "macdefs.h"
@@ -512,7 +513,8 @@ void FreeImage(IMAGE *image);
 IMAGE *CreateImageFromRGB(uint8_t *rgb, int pitch, int width, int height);
 void ConvertRGBToImage(uint8_t *rgb, int pitch, IMAGE *image);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 // Convert between images and device independent bitmaps
 IMAGE *CreateImageFromDIB(LPBITMAPINFOHEADER lpbi);
 void ConvertDibToImage(LPBITMAPINFOHEADER lpbi, IMAGE *image);
@@ -586,7 +588,8 @@ int32_t CompareImages(IMAGE *image1, IMAGE *image2, PIXEL *error, int pitch);
 int32_t CompareImageBands16s(IMAGE *image1, int band1, IMAGE *image2, int band2, PIXEL *residual, int pitch);
 bool CompareImageBufferConstantYUV(uint8_t *buffer, int length, int y_value, int u_value, int v_value);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 int ColorTableLength(LPBITMAPINFOHEADER lpbi);
 #endif
 

@@ -21,7 +21,8 @@
 #include "StdAfx.h"
 #include <time.h>
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #else
 #include <uuid/uuid.h>
 #ifdef __APPLE__
@@ -347,7 +348,7 @@ CSampleEncoder::PrepareToEncode(int inputWidth,
 
 			if(err != CFHD_ERROR_OKAY)
 			{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 				OutputDebugString("First AllocateSampleBuffer Failed Again\n");
 #endif
 				return err;
@@ -510,7 +511,7 @@ CSampleEncoder::EncodeSample(void *frameBuffer,
 		
 		if(err != CFHD_ERROR_OKAY)
 		{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 			OutputDebugString("AllocateSampleBuffer Failed\n");
 #endif
 			// Assume compression produces 3:1 or more.
@@ -523,7 +524,7 @@ CSampleEncoder::EncodeSample(void *frameBuffer,
 
 			if(err != CFHD_ERROR_OKAY)
 			{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 				OutputDebugString("AllocateSampleBuffer Failed Again\n");
 #endif
 				return err;
@@ -575,7 +576,7 @@ CSampleEncoder::EncodeSample(void *frameBuffer,
 	}
 	catch (...)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		OutputDebugString("::EncodeSample: Unexpected error");
 #endif
 		return CFHD_ERROR_UNEXPECTED;
@@ -754,7 +755,7 @@ CSampleEncoder::HandleMetadata()
 	if (global[0].block == NULL)
 	{
 		// Add the basic metadata required for all encoded samples
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		//UUID guid;
 		//UuidCreate(&guid);
 		GUID guid;
@@ -775,7 +776,8 @@ CSampleEncoder::HandleMetadata()
 		clock = time(NULL);
 		SystemTime = localtime( &clock );
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		sprintf_s(datestr, sizeof(datestr), "%04d-%02d-%02d", SystemTime->tm_year + 1900, SystemTime->tm_mon + 1, SystemTime->tm_mday);
 		sprintf_s(timestr, sizeof(timestr), "%02d:%02d:%02d", SystemTime->tm_hour, SystemTime->tm_min, SystemTime->tm_sec);
 #else
@@ -805,7 +807,8 @@ CSampleEncoder::HandleMetadata()
 				m_last_timecode_base = 24;
 				m_last_timecode_frame = SystemTime->tm_hour * 3600 * 24 + SystemTime->tm_min * 60 * 24 + SystemTime->tm_sec * 24;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				sprintf_s(tmpstr, sizeof(tmpstr), "%02d:%02d:%02d:00", SystemTime->tm_hour, SystemTime->tm_min, SystemTime->tm_sec);
 #else
 				sprintf(tmpstr, "%02d:%02d:%02d:00", SystemTime->tm_hour, SystemTime->tm_min, SystemTime->tm_sec);
@@ -872,7 +875,8 @@ CSampleEncoder::HandleMetadata()
 				mins = framenum % 60; framenum /= 60;
 				hours = framenum % 60; framenum /= 60;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				sprintf_s(tmpstr, sizeof(tmpstr), "%02d:%02d:%02d:%02d", hours, mins, secs, frms);
 #else
 				sprintf(tmpstr, "%02d:%02d:%02d:%02d", hours, mins, secs, frms);

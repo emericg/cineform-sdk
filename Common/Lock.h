@@ -28,7 +28,8 @@
 	All lock classes should provide lock and unlock methods and be derived
 	from a common base class.
 */
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 class CSimpleLock
 {

@@ -21,7 +21,8 @@
 
 #include <stdlib.h>
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <io.h>			// for _access()
 #include <direct.h>		// for _mkdir()
 #endif

@@ -68,7 +68,8 @@ extern COUNTER alloc_frame_count;		// Number of frames allocated
 #define SATURATE_12U(x) _saturate12u(x)
 
 #if 0
-	#ifdef _WINDOWS
+	#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 		#include <stdlib.h>
 

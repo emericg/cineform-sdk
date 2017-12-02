@@ -26,7 +26,8 @@
 
 #include "StdAfx.h"
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #else
 #define MAX_PATH	260
 #if __APPLE__
@@ -288,7 +289,8 @@ static void NewReturnType(CFHD_MetadataType *type, unsigned char ctype)
 /*
 void GetLUTPath(char PathStr[260])
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	USES_CONVERSION;
 
 	CSettings cfg;
@@ -302,7 +304,8 @@ void GetLUTPath(char PathStr[260])
 }
 */
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 static int WINAPI lstrlenWInternal(LPCWSTR lpString)
 {
     int i = -1;
@@ -390,7 +393,7 @@ void *LeftRightDelta(CSampleMetadata *metadata,
 	return ldata;
 }
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 uint32_t GetLastWriteTime(char *name)
 {
     HANDLE hFile;
@@ -457,7 +460,8 @@ bool CSampleMetadata::GetClipDatabase()
 		//GetLUTPath(PathStr);
 		bool checkdiskinfo = false;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		sprintf_s(filenameGUID, sizeof(filenameGUID), 
 #else	
 		sprintf(filenameGUID,
@@ -477,7 +481,7 @@ bool CSampleMetadata::GetClipDatabase()
 					m_currentClipGUID.Data4[7]);
 
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		uint32_t write_time = GetLastWriteTime(filenameGUID);
 		//char t[100];
 		//sprintf(t,"last_write_time %d %s", last_write_time,filenameGUID);
@@ -507,7 +511,8 @@ bool CSampleMetadata::GetClipDatabase()
 			FILE *fp;
 			int err = 0;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			err = fopen_s(&fp, filenameGUID, "rb");
 #else
 			fp = fopen(filenameGUID, "rb");
@@ -530,7 +535,8 @@ bool CSampleMetadata::GetClipDatabase()
 				if(m_databaseData)
 				{
 					fseek (fp, 0, SEEK_SET);
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 					len = (uint32_t)fread_s(m_databaseData, len, 1, len, fp);
 #else
 					len = (uint32_t)fread(m_databaseData,1,len,fp);

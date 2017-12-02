@@ -23,7 +23,8 @@
 #include "config.h"
 #include "timing.h"
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #elif __APPLE__
 #include "macdefs.h"
@@ -89,7 +90,8 @@
 #define DUMP   (0 && _DUMP)
 #endif
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #define SYSLOG	0
 #else
 #define SYSLOG	(0 && DEBUG)
@@ -133,7 +135,8 @@ extern COUNTER progressive_encode_count;
 #endif
 
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 // Forward reference
 
 #elif defined(__APPLE__)
@@ -1332,7 +1335,8 @@ void PrintEncodingParameters(ENCODING_PARAMETERS *parameters)
 	int err = 0;
 	FILE *file;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	err = fopen_s(&file, "parameters.log", "w+");
 #else
 	file = fopen("parameters.log", "w+");
@@ -1780,7 +1784,8 @@ void EncodeRelease(ENCODER *encoder, TRANSFORM *transform[], int num_transforms,
 
 	if (logfile != NULL && frame_count > 0)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		PrintStatistics(logfile, frame_count, NULL, TIMING_CSV_FILENAME);
 #else
 		PrintStatistics(logfile, frame_count, NULL, NULL);
@@ -2145,7 +2150,8 @@ bool EncodeSample(ENCODER *encoder, uint8_t *data, int width, int height, int pi
 		else
 		{	
 			encoder->error = CODEC_ERROR_INVALID_FORMAT;
-	#ifdef _WINDOWS
+	#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			if(encoder->reported_license_issue == 0)
 			{
 				encoder->reported_license_issue = 1;
@@ -2167,7 +2173,8 @@ bool EncodeSample(ENCODER *encoder, uint8_t *data, int width, int height, int pi
 		else
 		{
 			encoder->error = CODEC_ERROR_INVALID_FORMAT;
-	#ifdef _WINDOWS
+	#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			if(encoder->reported_license_issue == 0)
 			{
 				encoder->reported_license_issue = 1;
@@ -2197,7 +2204,8 @@ bool EncodeSample(ENCODER *encoder, uint8_t *data, int width, int height, int pi
 		else
 		{
 			encoder->error = CODEC_ERROR_INVALID_SIZE;
-	#ifdef _WINDOWS
+	#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			if(encoder->reported_license_issue == 0)
 			{
 				encoder->reported_license_issue = 1;
@@ -2218,7 +2226,8 @@ bool EncodeSample(ENCODER *encoder, uint8_t *data, int width, int height, int pi
 		else
 		{
 			encoder->error = CODEC_ERROR_INVALID_FORMAT;
-	#ifdef _WINDOWS
+	#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			if(encoder->reported_license_issue == 0)
 			{
 				encoder->reported_license_issue = 1;
@@ -2854,7 +2863,8 @@ bool EncodeSample(ENCODER *encoder, uint8_t *data, int width, int height, int pi
 	default:
 		// Cannot handle this color format
 		encoder->error = CODEC_ERROR_INVALID_FORMAT;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		if(encoder->reported_error == 0)
 		{
 			encoder->reported_error = 1;
@@ -8822,7 +8832,8 @@ void OverrideEncoderSettings(ENCODER *encoder)
 
 			if(type == 0) // preset_default an colr file for all clips.
 			{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				sprintf_s(filenameGUID, sizeof(filenameGUID), "%s/%s/defaults.colr", encoder->LUTsPathStr, encoder->UserDBPathStr);
 #else
 				sprintf(filenameGUID, "%s/%s/defaults.colr", encoder->LUTsPathStr, encoder->UserDBPathStr);
@@ -8833,7 +8844,8 @@ void OverrideEncoderSettings(ENCODER *encoder)
 			}
 			else if(type == 1) // preset_override an colr file for all clips.
 			{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				sprintf_s(filenameGUID, sizeof(filenameGUID), "%s/override.colr", encoder->OverridePathStr);
 #else
 				sprintf(filenameGUID, "%s/override.colr", encoder->OverridePathStr);
@@ -8849,7 +8861,8 @@ void OverrideEncoderSettings(ENCODER *encoder)
 				int err = 0;
 				FILE *fp;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				err = fopen_s(&fp, filenameGUID, "rb");
 #else
 				fp = fopen(filenameGUID, "rb");
@@ -8864,7 +8877,8 @@ void OverrideEncoderSettings(ENCODER *encoder)
 					if(len <= MAX_ENCODE_DATADASE_LENGTH)
 					{
 						fseek (fp, 0, SEEK_SET);
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						len = (int)fread_s(buffer, MAX_ENCODE_DATADASE_LENGTH, 1, len, fp);
 #else
 						len = (int)fread(buffer,1,len,fp);

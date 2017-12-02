@@ -25,7 +25,8 @@
 #include "encoder.h"
 #include <string>
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 // Must include the following file for Visual Studio 2005 (not required for Visual Studio 2003)
 //#include <atlbase.h>
 #include <tchar.h>
@@ -41,7 +42,8 @@
 #include "lutpath.h"
 
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 // Define the locations of registry keys for color processing
 #define REG_COLORPROCESSING_PATH _T("SOFTWARE\\CineForm\\ColorProcessing") // HKCU Where default props are stored
@@ -474,7 +476,8 @@ void InitLUTPaths(DECODER *decoder)
 {
 	if(decoder)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		DWORD dwType = REG_SZ, length = 260;
 		HKEY hKey = 0;
 		const char* CPsubkey = "SOFTWARE\\CineForm\\ColorProcessing";
@@ -622,7 +625,8 @@ void InitLUTPaths(DECODER *decoder)
 void InitLUTPathsEnc(ENCODER *encoder)
 {
 	if(encoder && encoder->LUTsPathStr[0] == 0)
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	{
 		DWORD dwType = REG_SZ, length = 260;
 		HKEY hKey = 0;
@@ -754,7 +758,8 @@ void InitLUTPathsEnc(ENCODER *encoder)
 void WriteLastGUIDAndFrame(DECODER *decoder, int checkdiskinfotime)
 {
     //GetColorProcessingOverides()
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
     {
 		CFHDDATA *cfhddata = &decoder->cfhddata;
         HKEY key;
@@ -1120,7 +1125,8 @@ bool LoadDiskMetadata(DECODER *decoder, int priority, char *filename)
 			FILE *fp;
 			int first = 1;
 			int retry = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			int openfail = 0;
 #endif
 			size = &decoder->DataBasesSize[priority];
@@ -1129,7 +1135,8 @@ bool LoadDiskMetadata(DECODER *decoder, int priority, char *filename)
 			{
 				int err = 0;
 				retry = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				openfail = 0;
 				err = fopen_s(&fp, filename, "rb");
 #else
@@ -1204,7 +1211,8 @@ bool LoadDiskMetadata(DECODER *decoder, int priority, char *filename)
                     if (theErr==ENOENT) {
                         // file does not exist so just bail
                         *size = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                         openfail = 1;
 #endif
                         retry = 0;
@@ -1212,7 +1220,8 @@ bool LoadDiskMetadata(DECODER *decoder, int priority, char *filename)
 //                      fprintf(stderr,"no %d\n",theErr);
                         if(decoder->hasFileDB[priority] == 1)
                         {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                             openfail = 1;
 #endif
                             if(first)
@@ -1220,7 +1229,8 @@ bool LoadDiskMetadata(DECODER *decoder, int priority, char *filename)
 //                              fprintf(stderr, "retryf\n");
                                 first = 0;
                                 retry = 1;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                                 Sleep(1);
 #else
                                 usleep(1000);
@@ -1314,7 +1324,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
             decoder->OverlaySafe[0] = 0.075f/2.0f;
             decoder->OverlaySafe[1] = 0.1f/2.0f;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			strcpy_s(decoder->MDPdefault.font, sizeof(decoder->MDPdefault.font), "Courier New Bold");
 #else
 			strcpy(decoder->MDPdefault.font, "Courier New Bold");
@@ -1518,7 +1529,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 	}
 	else if(cfhddata->update_last_used && checkdiskinfo) // used by FightLight
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		HKEY key;
 		//OutputDebugString("RegOpenKeyEx");
 
@@ -1533,7 +1545,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 			//if(lastGUID.Data1 || lastGUID.Data2 || lastGUID.Data3)
 			{
 				char TextGUID[64];
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 				sprintf_s(TextGUID, sizeof(TextGUID), 
 #else
 				sprintf(TextGUID, 
@@ -1598,7 +1611,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 			if(LoadDiskMetadata(decoder, METADATA_PRIORITY_BASE_DBDIR, filename))
 				checkdiskinfo = 1;
 			*/			
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			sprintf_s(filename, sizeof(filename), "%s/override.colr", decoder->OverridePathStr);
 #else
 			sprintf(filename, "%s/override.colr", decoder->OverridePathStr);
@@ -1658,7 +1672,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 					case METADATA_PRIORITY_DATABASE: //file database
                     case METADATA_PRIORITY_DATABASE_1: //file database channel 2 (stereo Right - delta)
                     case METADATA_PRIORITY_DATABASE_2: //file database channel 2 (stereo Right - delta)
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						strcpy_s(ext, sizeof(ext), "colr");
 						if (type == METADATA_PRIORITY_DATABASE_1)
 							strcpy_s(ext, sizeof(ext), "col1");
@@ -1674,7 +1689,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 
 						if(lastGUID.Data1 || lastGUID.Data2 || lastGUID.Data3)
 						{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 							sprintf_s(filenameGUID, sizeof(filenameGUID), 
 #else
 							sprintf(filenameGUID, 
@@ -1701,7 +1717,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 					case METADATA_PRIORITY_OVERRIDE: // preset_override an colr file for all clips.
                     case METADATA_PRIORITY_OVERRIDE_1: // preset_override an col1 file for all clips.
                     case METADATA_PRIORITY_OVERRIDE_2: // preset_override an col2 file for all clips.
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						strcpy_s(ext, sizeof(ext), "colr");
 						if(type == METADATA_PRIORITY_OVERRIDE_1)
 							strcpy_s(ext, sizeof(ext), "col1");
@@ -1717,7 +1734,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 
                         buffer = &decoder->DataBases[type];
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						sprintf_s(filenameGUID, sizeof(filenameGUID), "%s/override.%s", decoder->OverridePathStr, ext);
 #else
 						sprintf(filenameGUID, "%s/override.%s", decoder->OverridePathStr, ext);
@@ -1733,7 +1751,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 						FILE *fp;
 						int first = 1;
 						int retry = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						int openfail = 0;
 #endif
 						size = &decoder->DataBasesSize[type];
@@ -1741,7 +1760,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 						do
 						{
 							retry = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 							openfail = 0;
 #endif
 							if ((fp = fopen(filenameGUID,"rb")))
@@ -1809,7 +1829,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
                                 if (theErr==ENOENT) {
                                     // file does not exist so just bail
                                     *size = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                                     openfail = 1;
 #endif
                                     retry = 0;
@@ -1817,7 +1838,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
 //                                    fprintf(stderr,"no %d\n",theErr);
                                     if(decoder->hasFileDB[type] == 1)
                                     {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                                         openfail = 1;
 #endif
                                         if(first)
@@ -1825,7 +1847,8 @@ void OverrideCFHDDATA(DECODER *decoder, unsigned char *lpCurrentBuffer, int nWor
     //                                        fprintf(stderr, "retryf\n");
                                             first = 0;
                                             retry = 1;
-    #ifdef _WINDOWS
+    #if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
                                             Sleep(1);
     #else
                                             usleep(1000);
@@ -2100,7 +2123,8 @@ void OverrideCFHDDATAUsingParent(struct decoder *decoder, struct decoder *parent
             decoder->OverlaySafe[0] = 0.075f/2.0f;
             decoder->OverlaySafe[1] = 0.1f/2.0f;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			strcpy_s(decoder->MDPdefault.font, sizeof(decoder->MDPdefault.font), "Courier New Bold");
 #else
 			strcpy(decoder->MDPdefault.font, "Courier New Bold");

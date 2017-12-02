@@ -82,7 +82,8 @@ COUNTER progressive_decode_count = COUNTER_INITIALIZER;	// Decoded progressive f
 COUNTER putvlcbyte_count = COUNTER_INITIALIZER;			// Number of calls to PutVlcByte()
 COUNTER putzerorun_count = COUNTER_INITIALIZER;			// Number of calls to PutZeroRun()
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 // Clock frequency of the high-resolution timer for performance measurements.
 // Zero means that the timers have not been initialized or are not available.
 __int64 frequency = 0;
@@ -97,7 +98,8 @@ struct mach_timebase_info timebase = {0, 0};
 
 BOOL InitTiming(void)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	// Get the clock frequency
 	if (!QueryPerformanceFrequency((LARGE_INTEGER *)&frequency))
 	{
@@ -149,7 +151,8 @@ BOOL InitTiming(void)
 
 void StartTimer(TIMER *timer)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	LARGE_INTEGER current_time;
 	QueryPerformanceCounter(&current_time);
 	*timer -= current_time.QuadPart;
@@ -161,7 +164,8 @@ void StartTimer(TIMER *timer)
 
 void StopTimer(TIMER *timer)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	LARGE_INTEGER current_time;
 	QueryPerformanceCounter(&current_time);
 	*timer += current_time.QuadPart;
@@ -192,7 +196,8 @@ float AbsoluteTimerResolution()
 
 #define GMEM_FLAGS (GMEM_MOVEABLE | GMEM_ZEROINIT | GMEM_SHARE)
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 void PrintStatistics(FILE *logfile, int frame_count, HWND hwnd, char *results)
 #else
 void PrintStatistics(FILE *logfile, int frame_count, void *unused, char *results)
@@ -242,7 +247,8 @@ void PrintStatistics(FILE *logfile, int frame_count, void *unused, char *results
 	if (decode_lookup_count > 0)
 		decode_search_ratio = (float)decode_search_count / (decode_lookup_count + decode_search_count);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	// Can the results be copied to the clipboard?
 	if (hwnd != NULL)
 	{
@@ -291,7 +297,8 @@ void PrintStatistics(FILE *logfile, int frame_count, void *unused, char *results
 		FILE *csvfile;
 		int err = 0;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		err = fopen_s(&csvfile, results, "w");
 #else
 		csvfile = fopen(results, "w");
@@ -360,7 +367,8 @@ void PrintStatistics(FILE *logfile, int frame_count, void *unused, char *results
 		fprintf(logfile, "Sample bytes: %8d\n", sample_byte_count);
 		fprintf(logfile, "\n");
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		// Print the timer resolution
 		fprintf(logfile, "Resolution: %12.3f microseconds\n", 1.0e6 / (float)frequency);
 #else

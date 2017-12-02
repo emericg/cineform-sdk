@@ -31,7 +31,8 @@
 #include "CFHDSampleHeader.h"
 #endif
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	#ifndef DYNAMICLIB
 		#define CFHDDECODER_API
 	#else

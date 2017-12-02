@@ -22,7 +22,8 @@
 #include "config.h"
 #include "timing.h"
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #elif __APPLE__
 #include "macdefs.h"
@@ -77,7 +78,8 @@ extern FILE *logfile;
 #endif
 
 // Enable console output for debugging only on the Macintosh
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #define SYSLOG	0
 #else
 #define SYSLOG	(0 && DEBUG)
@@ -7655,7 +7657,8 @@ void ConvertWaveletBand(IMAGE *wavelet, int k)
 /***** Threaded implementations of the wavelet transforms *****/
 
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #endif
 

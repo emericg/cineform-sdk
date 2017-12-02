@@ -24,7 +24,8 @@
 
 void *CMemAlloc::Alloc(size_t size)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	void *block = _aligned_malloc(size, m_alignment);
 #else
   #ifdef __APPLE__
@@ -48,7 +49,8 @@ void *CMemAlloc::Alloc(size_t size)
 
 void CMemAlloc::Free(void *block)
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	_aligned_free(block);
 #else
   #ifdef __APPLE__

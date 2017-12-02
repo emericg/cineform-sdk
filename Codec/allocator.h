@@ -31,7 +31,7 @@
 #include "../Common/CFHDAllocator.h"
 
 
-#ifdef _WINDOWS
+#if defined(_MSC_VER)
 
 #ifdef INLINE
 #undef INLINE

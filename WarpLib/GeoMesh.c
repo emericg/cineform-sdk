@@ -153,7 +153,8 @@ void * geomesh_create(int meshwidth, int meshheight)
     gm->xstep = 0;
     gm->ystep = 0;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	strcpy_s(gm->signature, sizeof(gm->signature), GEOMESH_SIGNATURE);
 #else
 	strcpy(gm->signature, GEOMESH_SIGNATURE);

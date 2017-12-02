@@ -29,10 +29,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
  #ifdef _DEBUG
   #include <tchar.h>				// For printing debug string in the console window
  #endif
+
 #endif
 
 // Maximum number of threads in a thread pool
@@ -67,7 +69,7 @@ typedef enum
 } EVENT_STATE;
 
 
-#ifdef _WINDOWS
+#ifdef _MSVC_VER
 
 #include <windows.h>
 
@@ -327,16 +329,24 @@ typedef struct
 } THREAD;
 
 // Dummy routines for thread affinity calls
-#ifdef _WINDOWS
+#ifdef _MSVC_VER
+
 HANDLE GetCurrentThread(void);
 DWORD SetThreadAffinityMask(HANDLE hThread, DWORD * dwThreadAffinityMask);
+
 #else
-#if __APPLE__
-#else
+/*
+#ifndef __MINGW32__
+
+#ifndef __APPLE__
 pthread_t GetCurrentThread(void);
 #endif
+
 void SetThreadAffinityMask(pthread_t thread, uint32_t *thread_affinity_mask);
-#endif
+
+#endif // __MINGW32__
+*/
+#endif // _MSVC_VER
 
 #if 0	// Unnamed semaphores are not supported on the Macintosh
 typedef struct

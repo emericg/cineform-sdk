@@ -31,7 +31,8 @@ void DumpString(char *txt)
 	FILE *fp;
 	int err = 0;
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	err = fopen_s(&fp, "dumpstring.txt", "a");
 #else
 	fp = fopen("dumpstring.txt", "a");

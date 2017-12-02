@@ -106,7 +106,8 @@ uint32_t ValidateLookGenCRCEnc(char* path)
 	int crc = 0;
 	FILE *fp;
 	int err = 0;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	err = fopen_s(&fp, path, "r");
 #else
 	fp = fopen(path, "r");
@@ -263,7 +264,8 @@ uint32_t ValidateLookGenCRCEnc(char* path)
 						hexstring[7] = buf[pos+1];
 
 						//printf("%s",hexstring);
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 						sscanf_s(hexstring, "%08x", (int *)&val);
 #else
 						sscanf(hexstring, "%08x", (int *)&val);
@@ -320,7 +322,8 @@ uint32_t ValidateLookGenCRCEnc(char* path)
 
 CFHD_Error CSampleEncodeMetadata::AddGUID()
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	//UUID guid;
 	//UuidCreate(&guid);
 	GUID guid;
@@ -353,7 +356,7 @@ CFHD_Error CSampleEncodeMetadata::AddLookFile(METADATA_TYPE ctype,
 	}
 	
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		char filename[260] = {0};
 		size_t filenamelen = 0;
 

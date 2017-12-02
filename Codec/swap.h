@@ -29,7 +29,7 @@ extern "C"
 
 // Define a platform independent byte swapping routine
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 #define _bswap(x)		_byteswap_ulong(x)
 #define SwapInt32(x)	_byteswap_ulong(x)
 #define SwapInt16(x)	_byteswap_ushort(x)

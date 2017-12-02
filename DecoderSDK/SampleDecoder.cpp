@@ -35,7 +35,7 @@
 
 #include "StdAfx.h"
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
 // Export the interface to the sample decoder
 #define DECODERDLL_EXPORTS	1
@@ -60,7 +60,8 @@
 #include "metadata.h"
 
 // Include files for the encoder DLL
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include "CFHDDecoder.h"
 #else
 #include "CFHDDecoder.h"
@@ -647,7 +648,8 @@ CSampleDecoder::SetLicense(const unsigned char *licenseKey)
 	else
 	{
 		errorCode = CFHD_ERROR_LICENSING;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		OutputDebugString("m_decoder is NULL, can't set the license");
 #endif
 	}
@@ -1246,7 +1248,7 @@ CSampleDecoder::PrepareDecoder(int outputWidth,
 	}
 	catch (...)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		char message[256];
 		sprintf_s(message, sizeof(message), "CSampleDecoder::PrepareDecoder caught internal codec error\n");
 		OutputDebugString(message);
@@ -1366,7 +1368,7 @@ CSampleDecoder::ParseSampleHeader(void *samplePtr,
 	}
 	catch (...)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		char message[256];
 		sprintf_s(message, sizeof(message), "CSampleDecoder::PrepareDecoder caught internal codec error\n");
 		OutputDebugString(message);
@@ -1559,7 +1561,7 @@ CSampleDecoder::DecodeSample(void *samplePtr,
 		}
 		catch (...)
 		{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 // #if DEBUG
 			OutputDebugString("::DecodeSample: Unexpected error");
 			char tt[100];
@@ -1568,7 +1570,8 @@ CSampleDecoder::DecodeSample(void *samplePtr,
 
 			sprintf_s(tt, sizeof(tt), "C:/Cedoc/Logfiles/%04d.cfhd", fileexnum++);
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 			err = fopen_s(&fp, tt, "wb");
 #else
 			fp = fopen(tt,"wb");
@@ -1611,7 +1614,7 @@ CSampleDecoder::DecodeSample(void *samplePtr,
 	}
 	catch (...)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		char message[256];
 		sprintf_s(message, sizeof(message), "CSampleDecoder::PrepareDecoder caught internal codec error\n");
 		OutputDebugString(message);
@@ -1684,7 +1687,7 @@ CFHD_Error CSampleDecoder::CopyToOutputBuffer(void *decodedBuffer, int decodedPi
 		}
 	}
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 	// Do not swap bytes on Windows
 	byte_swap_flag = false;
 #else

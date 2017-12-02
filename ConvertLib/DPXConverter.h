@@ -57,7 +57,7 @@ protected:
 
 	uint32_t Swap32(uint32_t x)
 	{
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 		// Use the byte swap routine from the standard library 
 		return (byte_swap_flag ? _byteswap_ulong(x) : (x));
 #elif defined(__APPLE__)

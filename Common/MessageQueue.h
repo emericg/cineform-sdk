@@ -32,7 +32,8 @@
 
 class CMessageSemaphore
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 public:
 

@@ -21,7 +21,8 @@
 
 #pragma once
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 // Define strings for the database locations on Windows
 #define OVERRIDE_PATH_STRING	"C:/Users/Public/CineForm"

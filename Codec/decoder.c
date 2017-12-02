@@ -48,7 +48,8 @@
 #define PI 3.14159265359f
 #endif
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #elif __APPLE__
 #include "macdefs.h"
@@ -1516,7 +1517,8 @@ bool DecodeInit(DECODER *decoder, int width, int height, int format, int resolut
 	memcpy(&codesets[0], &CURRENT_CODESET, sizeof(CODESET));
 #endif
 	
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	// Set the handler for system exceptions
 	SetDefaultExceptionHandler();
 #endif
@@ -17074,7 +17076,8 @@ void DecodeRelease(DECODER *decoder, TRANSFORM *transform[], int num_transforms)
 
 	if (logfile != NULL && frame_count > 0)\
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		PrintStatistics(logfile, frame_count, NULL, TIMING_CSV_FILENAME);
 #else
 		PrintStatistics(logfile, frame_count, NULL, NULL);
@@ -17154,7 +17157,8 @@ void SetDecoderFormat(DECODER *decoder, int width, int height, int format, int r
 void SetDecoderCapabilities(DECODER *decoder)
 {
 	int processor_count;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	int limit_cpus = 32;
 #else
 	int limit_cpus = 32;		// AJA spins off too many
@@ -24071,7 +24075,8 @@ DWORD WINAPI InterlacedWorkerThreadProc(LPVOID lpParam)
 	}
 
 	// Set the handler for system exceptions
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	SetDefaultExceptionHandler();
 #endif
 	

@@ -34,7 +34,8 @@
 #define XMMOPT (1 && _XMMOPT)
 #endif
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 #include <windows.h>
 #endif
 
@@ -323,7 +324,8 @@ THREAD_PROC(EntropyWorkerThreadProc, lpParam)
 
 	if (decoder->thread_cntrl.affinity)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		HANDLE hCurrentThread = GetCurrentThread();
 		SetThreadAffinityMask(hCurrentThread, decoder->thread_cntrl.affinity);
 #else
@@ -399,7 +401,8 @@ THREAD_PROC(ParallelThreadProc, lpParam)
 
 	if(decoder->thread_cntrl.affinity)
 	{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		HANDLE hCurrentThread = GetCurrentThread();
 		SetThreadAffinityMask(hCurrentThread,decoder->thread_cntrl.affinity);
 #else

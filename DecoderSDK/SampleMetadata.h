@@ -160,7 +160,8 @@ public:
 		}
 #endif
 		// Otherwise use the default memory allocator
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		return _aligned_malloc(size, alignment);
 #else
   #ifdef __APPLE__

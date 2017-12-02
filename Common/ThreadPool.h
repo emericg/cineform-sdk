@@ -21,7 +21,8 @@
 
 #pragma once
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 // The thread procedure must use the standard call interface
 #ifndef STDCALL
@@ -47,7 +48,8 @@
 
 class CThread
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 
 	enum
 	{

@@ -111,7 +111,8 @@ int DrawOpen(DECODER *decoder)
 	void *pLib = NULL;
 	char filePath[_MAX_PATH] = {'\0'};
 	CAIROSTUFF *CS = NULL;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	lpCairoLib	cairoLib = NULL;
 #endif
 	CAIROlib *cairo = NULL;
@@ -161,7 +162,8 @@ int DrawOpen(DECODER *decoder)
 
 	if(!decoder->cairo_loaded)
 	{
-		#ifdef _WINDOWS
+		#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		GetEnvironmentVariable("PROGRAMFILES",szName,255);
 
 		strcat(filePath, szName);
@@ -175,7 +177,8 @@ int DrawOpen(DECODER *decoder)
 #if __APPLE__
 		pLib = dlopen("/usr/x11/lib/libCairo.dylib", RTLD_NOW);
 #endif
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 		pLib = (void*)LoadLibrary(filePath);
 		if(pLib == NULL) 
 		{
@@ -419,7 +422,8 @@ THREAD_PROC(DrawThreadProc, lpParam)
 	int thread_index;
 
 	// Set the handler for system exceptions
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 	SetDefaultExceptionHandler();
 #endif
 
@@ -2275,7 +2279,8 @@ void DrawMetadataObjects(DECODER *decoder)
 							len = strlen(path);
 							if(len > 4)
 							{
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
 								if(0 == stricmp(&path[len - 4], ".png"))
 #else
 								if(0 == strcasecmp(&path[len-4], ".png"))

@@ -31,7 +31,7 @@
 
 #include "StdAfx.h"
 
-#if _WINDOWS
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
 // Export the interface to the decoder
 #define DECODERDLL_EXPORTS	1
