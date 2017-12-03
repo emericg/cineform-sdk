@@ -20,54 +20,36 @@
 */
 #pragma once
 
-#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
 
-// Exclude rarely-used stuff from Windows headers
-//#define WIN32_LEAN_AND_MEAN
 
-// Windows header files
-#include <windows.h>
-
-// Includes required for Visual Studio 2005 (not required for Visual Studio 2003)
-//#include <atlbase.h>
-#include <tchar.h>
-
-#include <stdlib.h>
-#include <memory.h>
-#include <assert.h>
-
-#ifdef WIN32
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
-#endif
-
-#else
-
-// Hack to eliminate conflict with the codec CODESET data type
-#define _LANGINFO_H 1
 
 #include <stddef.h>
 #include <stdlib.h>
 #include <memory.h>
 #include <assert.h>
 
-#ifndef __APPLE__
-#include <mm_malloc.h>
-#endif
+#include <stdio.h>
+#include <stdarg.h>
+
+#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
+
+// Windows header files
+#include <windows.h>
+
+// Includes required for Visual Studio 2005 (not required for Visual Studio 2003)
+#include <tchar.h>
+
+#include <stdlib.h>
+#include <memory.h>
+#include <assert.h>
+
+#else
 
 #include <libgen.h>
 #include <pthread.h>
 #include <semaphore.h>
-
-#define __STDC_LIMIT_MACROS
-#include <stdint.h>
-
-//#if __APPLE__
-//#include "macdefs.h"
-//#endif
-
-#include <stdio.h>
-#include <stdarg.h>
 
 #endif
 

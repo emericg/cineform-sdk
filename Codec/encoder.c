@@ -8862,7 +8862,6 @@ void OverrideEncoderSettings(ENCODER *encoder)
 				FILE *fp;
 
 #if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
 				err = fopen_s(&fp, filenameGUID, "rb");
 #else
 				fp = fopen(filenameGUID, "rb");
@@ -8877,8 +8876,7 @@ void OverrideEncoderSettings(ENCODER *encoder)
 					if(len <= MAX_ENCODE_DATADASE_LENGTH)
 					{
 						fseek (fp, 0, SEEK_SET);
-#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
+#if defined(_MSVC_VER)
 						len = (int)fread_s(buffer, MAX_ENCODE_DATADASE_LENGTH, 1, len, fp);
 #else
 						len = (int)fread(buffer,1,len,fp);

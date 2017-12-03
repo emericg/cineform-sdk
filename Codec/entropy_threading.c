@@ -325,7 +325,6 @@ THREAD_PROC(EntropyWorkerThreadProc, lpParam)
 	if (decoder->thread_cntrl.affinity)
 	{
 #if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
 		HANDLE hCurrentThread = GetCurrentThread();
 		SetThreadAffinityMask(hCurrentThread, decoder->thread_cntrl.affinity);
 #else

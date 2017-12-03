@@ -18,17 +18,9 @@
 *  limitations under the License.
 *
 */
+
 #include "StdAfx.h"
 #include <time.h>
-
-#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
-#else
-#include <uuid/uuid.h>
-#ifdef __APPLE__
-//#include "GPOutputDebugString.h"
-#endif
-#endif
 
 // Include files from the codec library
 #include "encoder.h"

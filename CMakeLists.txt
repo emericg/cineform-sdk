@@ -14,12 +14,16 @@ add_definitions(-D_ALLOCATOR=1 -DWARPSTUFF=1)
 if (WIN32)
 	include(ucm.cmake)
 	ucm_set_runtime(STATIC)
-	
+
 	SET(COMPILER_FLAGS "")
-	SET(COMPILER_FLAGS_W_OMP "/openmp" )
+	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+		SET(COMPILER_FLAGS_W_OMP "/openmp")
+	else ()
+		SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--allow-multiple-definition")
+	endif ()
 	SET(ADDITIONAL_LIBS "")
 endif (WIN32)
- 
+
 if (UNIX)
 	SET(COMPILER_FLAGS -fPIC -O3)
 	SET(COMPILER_FLAGS_W_OMP -fopenmp -O3)

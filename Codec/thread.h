@@ -335,7 +335,7 @@ HANDLE GetCurrentThread(void);
 DWORD SetThreadAffinityMask(HANDLE hThread, DWORD * dwThreadAffinityMask);
 
 #else
-/*
+
 #ifndef __MINGW32__
 
 #ifndef __APPLE__
@@ -345,7 +345,7 @@ pthread_t GetCurrentThread(void);
 void SetThreadAffinityMask(pthread_t thread, uint32_t *thread_affinity_mask);
 
 #endif // __MINGW32__
-*/
+
 #endif // _MSVC_VER
 
 #if 0	// Unnamed semaphores are not supported on the Macintosh

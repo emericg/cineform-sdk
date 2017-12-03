@@ -5099,8 +5099,7 @@ float *LoadCube64_3DLUT(DECODER *decoder, CFHDDATA *cfhddata, int *lutsize)
 		if(decoder->LUTsPathStr[0] == 0)
 			InitLUTPaths(decoder);
 
-#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
+#if defined(_MSVC_VER)
 		sprintf_s(crcname, sizeof(crcname), "%s/%08X.cflook", decoder->LUTsPathStr, (uint32_t)cfhddata->user_look_CRC);
 		err = fopen_s(&fp, crcname, "rb");
 #else
@@ -5114,8 +5113,7 @@ float *LoadCube64_3DLUT(DECODER *decoder, CFHDDATA *cfhddata, int *lutsize)
 			int validcflook = 0;
 			int len = 0;
 
-#if defined(_WINDOWS) || defined(_WIN32) || defined(__WIN32__)
-
+#if defined(_MSVC_VER)
 			len = (int)fread_s(&CFLKhdr, sizeof(CFLook_Header), 1, sizeof(CFLook_Header), fp);
 #else
 			len = (int)fread(&CFLKhdr, 1, sizeof(CFLook_Header), fp);
